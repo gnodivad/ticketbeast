@@ -12,10 +12,9 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
     }
 
     /**

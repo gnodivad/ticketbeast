@@ -2,8 +2,9 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Concert;
-use App\Billing\FakePaymentGateway;
+use App\Facades\TicketCode;
 use App\Billing\PaymentGateway;
+use App\Billing\FakePaymentGateway;
 use App\OrderConfirmationNumberGenerator;
 use App\Facades\OrderConfirmationNumber;
 
@@ -54,6 +55,7 @@ class PurchaseTicketsTest extends TestCase
     public function customer_can_purchase_concert_tickets_to_a_published_concert()
     {
         OrderConfirmationNumber::shouldReceive('generate')->andReturn('ORDERCONFIRMATION1234');
+        TicketCode::shouldReceive('generateFor')->andReturn('TICKETCODE1', 'TICKETCODE2', 'TICKETCODE3');
 
         $concert = factory(Concert::class)->states('published')->create(['ticket_price' => 3250])->addTickets(3);
 
@@ -68,7 +70,6 @@ class PurchaseTicketsTest extends TestCase
         $this->seeJsonSubset([
             'confirmation_number' => 'ORDERCONFIRMATION1234',
             'email' => 'john@example.com',
-            'ticket_quantity' => 3,
             'amount' => 9750,
             'tickets' => [
                 ['code' => 'TICKETCODE1'],
