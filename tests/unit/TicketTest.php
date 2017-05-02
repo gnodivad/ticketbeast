@@ -1,9 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\Ticket;
+namespace Tests\Unit;
+
 use App\Order;
+use App\Ticket;
+use Tests\TestCase;
 use App\Facades\TicketCode;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class TicketTest extends TestCase
 {

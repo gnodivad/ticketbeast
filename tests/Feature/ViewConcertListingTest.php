@@ -1,6 +1,10 @@
 <?php
+
+namespace Tests\Feature;
+
 use App\Concert;
 use Carbon\Carbon;
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ViewConcertListingTest extends TestCase

@@ -1,11 +1,14 @@
 <?php
 
-use App\Concert;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+namespace Tests\Unit;
+
+use Mockery;
 use App\Order;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Ticket;
+use Tests\TestCase;
 use App\Billing\Charge;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrderTest extends TestCase
 {

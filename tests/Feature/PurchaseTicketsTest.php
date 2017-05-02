@@ -1,14 +1,16 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+namespace Tests\Feature;
+
 use App\Concert;
+use Tests\TestCase;
 use App\Facades\TicketCode;
 use App\Billing\PaymentGateway;
 use App\Billing\FakePaymentGateway;
-use App\OrderConfirmationNumberGenerator;
-use App\Facades\OrderConfirmationNumber;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationEmail;
+use Illuminate\Support\Facades\Mail;
+use App\Facades\OrderConfirmationNumber;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class PurchaseTicketsTest extends TestCase
 {
