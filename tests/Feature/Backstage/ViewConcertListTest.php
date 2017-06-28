@@ -18,10 +18,6 @@ class ViewConcertListTest extends TestCase
     {
         parent::setUp();
 
-        TestResponse::macro('data', function ($key) {
-            return $this->original->getData()[$key];
-        });
-
         Collection::macro('assertContains', function ($value) {
             Assert::assertTrue($this->contains($value), 'Failed asserting that the collection contained the specific value.');
         });
