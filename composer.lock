@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "eea0d1fdd6067a3093aa80ed5405b283",
+    "content-hash": "5694582e1e277ffd59cf6554207cb58c",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -604,35 +604,40 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v1.1.1",
+            "version": "v2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "87d57bbcb878e569aa8750e1d487ce923561f3e3"
+                "reference": "a7aedd50dd5b4965ee589087ba575cb03981fe80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/87d57bbcb878e569aa8750e1d487ce923561f3e3",
-                "reference": "87d57bbcb878e569aa8750e1d487ce923561f3e3",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/a7aedd50dd5b4965ee589087ba575cb03981fe80",
+                "reference": "a7aedd50dd5b4965ee589087ba575cb03981fe80",
                 "shasum": ""
             },
             "require": {
                 "facebook/webdriver": "~1.0",
-                "illuminate/console": "~5.4",
-                "illuminate/support": "~5.4",
+                "illuminate/console": "~5.5",
+                "illuminate/support": "~5.5",
                 "nesbot/carbon": "~1.20",
                 "php": ">=5.6.4",
                 "symfony/console": "~3.2",
                 "symfony/process": "~3.2"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9.6",
-                "phpunit/phpunit": "^5.7"
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Dusk\\DuskServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -651,13 +656,12 @@
                 }
             ],
             "description": "Laravel Dusk provides simple end-to-end testing and browser automation.",
-            "homepage": "https://laravel.com",
             "keywords": [
                 "laravel",
                 "testing",
                 "webdriver"
             ],
-            "time": "2017-10-31T21:41:42+00:00"
+            "time": "2018-03-09T15:35:54+00:00"
         },
         {
             "name": "laravel/framework",
