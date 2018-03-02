@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Concert;
 use App\Billing\FakePaymentGateway;
 use App\Billing\PaymentGateway;
@@ -31,7 +29,7 @@ class PurchaseTicketsTest extends TestCase
 
         $order = $concert->orders()->where('email', 'john@example.com')->first();
         $this->assertNotNull($order);
-        
-        $this->assertEquals(3, $order->tickets->count());
+
+        $this->assertEquals(3, $order->tickets()->count());
     }
 }
