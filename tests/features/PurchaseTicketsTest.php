@@ -42,10 +42,16 @@ class PurchaseTicketsTest extends TestCase
 
         $this->assertResponseStatus(201);
 
+        $this->seeJsonSubset([
+            'email' => 'john@example.com',
+            'ticket_quantity' => 3,
+            'amount' => 9750,
+        ]);
+
         $this->assertEquals(9750, $this->paymentGateway->totalCharges());
 
         $this->assertTrue($concert->hasOrderFor('john@example.com'));
-        
+
         $this->assertEquals(3, $concert->ordersFor('john@example.com')->first()->ticketQuantity());
     }
 
@@ -120,7 +126,7 @@ class PurchaseTicketsTest extends TestCase
             'ticket_quantity' => 3,
             'payment_token' => $this->paymentGateway->getValidTestToken(),
         ]);
-        
+
         $this->assertValidationError('email');
     }
 
@@ -145,10 +151,10 @@ class PurchaseTicketsTest extends TestCase
             'ticket_quantity' => 0,
             'payment_token' => $this->paymentGateway->getValidTestToken(),
         ]);
-        
+
         $this->assertValidationError('ticket_quantity');
     }
-    
+
     /** @test */
     public function payment_token_is_required()
     {
