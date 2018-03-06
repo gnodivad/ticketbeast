@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Billing\FakePaymentGateway;
 use App\Billing\PaymentFailedException;
 
@@ -27,7 +24,23 @@ class FakePaymentGatewayTest extends TestCase
         } catch (PaymentFailedException $e) {
             return;
         }
-        
+
         $this->fail();
+    }
+
+    /** @test */
+    public function running_a_hook_before_the_first_charge()
+    {
+        $paymentGateway = new FakePaymentGateway;
+        $callbackRan = false;
+
+        $paymentGateway->beforeFirstCharge(function ($paymentGateway) use (&$callbackRan) {
+            $callbackRan = true;
+            $this->assertEquals(0, $paymentGateway->totalCharges());
+        });
+
+        $paymentGateway->charge(2500, $paymentGateway->getValidTestToken());
+        $this->assertTrue($callbackRan);
+        $this->assertEquals(2500, $paymentGateway->totalCharges());
     }
 }
