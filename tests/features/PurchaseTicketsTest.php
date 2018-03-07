@@ -19,7 +19,11 @@ class PurchaseTicketsTest extends TestCase
 
     private function orderTickets($concert, $params)
     {
+        $savedRequest = $this->app['request'];
+        
         $this->json('POST', "/concerts/{$concert->id}/orders", $params);
+
+        $this->app['request'] = $savedRequest;
     }
 
     private function assertValidationError($field)
@@ -127,7 +131,7 @@ class PurchaseTicketsTest extends TestCase
             'email' => 'personA@example.com',
             'ticket_quantity' => 3,
             'payment_token' => $this->paymentGateway->getValidTestToken(),
-        ]);
+        ]);  
 
         $this->assertEquals(3600, $this->paymentGateway->totalCharges());
 
