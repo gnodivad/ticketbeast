@@ -33,7 +33,9 @@ class ConcertOrdersController extends Controller
 
             $this->paymentGateway->charge($reservation->totalCost(), request('payment_token'));
 
-            $order = Order::forTickets($reservation->tickets(), request('email'), $reservation->totalCost());
+            $order = Order::forTickets();
+
+            $order = $reservation->someMethod();
 
             return response()->json($order, 201);
         } catch (PaymentFailedException $e) {
