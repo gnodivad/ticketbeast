@@ -42,7 +42,6 @@ class ConcertOrdersController extends Controller
             $reservation->cancel();
             return response()->json([], 422);
         } catch (NotEnoughTicketsException $e) {
-            $reservation->cancel();
             return response()->json([], 422);
         }
     }
