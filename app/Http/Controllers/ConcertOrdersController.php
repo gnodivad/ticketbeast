@@ -29,11 +29,7 @@ class ConcertOrdersController extends Controller
 
         try {
             $reservation = $concert->reserveTickets(request('ticket_quantity'), request('email'));
-
-            $this->paymentGateway->charge($reservation->totalCost(), request('payment_token'));
-
-            $order = $reservation->complete();
-
+            $order = $reservation->complete($this->paymentGateway, request('payment_token'));
             return response()->json($order, 201);
         } catch (PaymentFailedException $e) {
             $reservation->cancel();

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Reservation;
 use App\Concert;
 use App\Ticket;
+use App\Billing\FakePaymentGateway;
 
 class ReservationTest extends TestCase
 {
@@ -71,10 +72,13 @@ class ReservationTest extends TestCase
 
         $reservation = new Reservation($tickets, 'john@example.com');
 
-        $order = $reservation->complete();
+        $paymentGateway = new FakePaymentGateway;
+
+        $order = $reservation->complete($paymentGateway, $paymentGateway->getValidTestToken());
 
         $this->assertEquals('john@example.com', $order->email);
         $this->assertEquals(3, $order->ticketQuantity());
         $this->assertEquals(3600, $order->amount);
+        $this->assertEquals(3600, $paymentGateway->totalCharges());
     }
 }
