@@ -33,82 +33,81 @@
 </template>
 
 <script>
-    export default {
-        props: [
-            'price',
-            'concertTitle',
-            'concertId',
-        ],
-        data() {
-            return {
-                quantity: 1,
-                stripeHandler: null,
-                processing: false,
+export default {
+    props: ["price", "concertTitle", "concertId"],
+    data() {
+        return {
+            quantity: 1,
+            stripeHandler: null,
+            processing: false
+        };
+    },
+    computed: {
+        description() {
+            if (this.quantity > 1) {
+                return `${this.quantity} tickets to ${this.concertTitle}`;
             }
+            return `One ticket to ${this.concertTitle}`;
         },
-        computed: {
-            description() {
-                if (this.quantity > 1) {
-                    return `${this.quantity} tickets to ${this.concertTitle}`
-                }
-                return `One ticket to ${this.concertTitle}`
-            },
-            totalPrice() {
-                return this.quantity * this.price
-            },
-            priceInDollars() {
-                return (this.price / 100).toFixed(2)
-            },
-            totalPriceInDollars() {
-                return (this.totalPrice / 100).toFixed(2)
-            },
+        totalPrice() {
+            return this.quantity * this.price;
         },
-        methods: {
-            initStripe() {
-                const handler = StripeCheckout.configure({
-                    key: App.stripePublicKey
-                })
-
-                window.addEventListener('popstate', () => {
-                    handler.close()
-                })
-
-                return handler
-            },
-            openStripe(callback) {
-                this.stripeHandler.open({
-                    name: 'TicketBeast',
-                    description: this.description,
-                    currency: "usd",
-                    allowRememberMe: false,
-                    panelLabel: 'Pay {{amount}}',
-                    amount: this.totalPrice,
-                    image: '/img/checkout-icon.png',
-                    token: this.purchaseTickets,
-                })
-            },
-            purchaseTickets(token) {
-                console.log({
-                    email: token.email,
-                    quantity: this.quantity,
-                    payment_token: token.id,
-                })
-
-                this.processing = true
-
-                axios.post(`/concerts/${this.concertId}/orders`, {
-                    email: token.email,
-                    quantity: this.quantity,
-                    payment_token: token.id,
-                }).then(response => {
-                    window.location.href = response.body.url
-                }).catch(response => {
-                    this.processing = false
-                })
-            }
+        priceInDollars() {
+            return (this.price / 100).toFixed(2);
         },
-        created() {
-            this.stripeHandler = this.initStripe()
+        totalPriceInDollars() {
+            return (this.totalPrice / 100).toFixed(2);
         }
+    },
+    methods: {
+        initStripe() {
+            const handler = StripeCheckout.configure({
+                key: App.stripePublicKey
+            });
+
+            window.addEventListener("popstate", () => {
+                handler.close();
+            });
+
+            return handler;
+        },
+        openStripe(callback) {
+            this.stripeHandler.open({
+                name: "TicketBeast",
+                description: this.description,
+                currency: "usd",
+                allowRememberMe: false,
+                panelLabel: "Pay {{amount}}",
+                amount: this.totalPrice,
+                image: "/img/checkout-icon.png",
+                token: this.purchaseTickets
+            });
+        },
+        purchaseTickets(token) {
+            console.log({
+                email: token.email,
+                quantity: this.quantity,
+                payment_token: token.id
+            });
+
+            this.processing = true;
+
+            axios
+                .post(`/concerts/${this.concertId}/orders`, {
+                    email: token.email,
+                    ticket_quantity: this.quantity,
+                    payment_token: token.id
+                })
+                .then(response => {
+                    window.location.href = response.body.url;
+                })
+                .catch(response => {
+                    this.processing = false;
+                });
+        }
+    },
+    created() {
+        this.stripeHandler = this.initStripe();
     }
+};
 </script>
