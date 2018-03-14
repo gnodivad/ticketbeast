@@ -2,6 +2,9 @@
 
 use App\Billing\StripePaymentGateway;
 
+/**
+ * @group integration
+ */
 class StripePaymentGatewayTest extends TestCase
 {
     private function lastCharge()
