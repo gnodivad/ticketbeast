@@ -12,6 +12,7 @@
         "zondicons/blade-bridge": "^0.1.0"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.8",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
