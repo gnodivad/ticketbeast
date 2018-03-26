@@ -26,7 +26,7 @@
         }
     },
     "autoload-dev": {
-        "classmap": ["tests/TestCase.php"]
+        "classmap": ["tests"]
     },
     "scripts": {
         "post-root-package-install": [
