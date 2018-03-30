@@ -68,7 +68,6 @@ class ViewOrderTest extends TestCase
         $response->assertSee('17916');
         $response->assertSee('john@example.com');
 
-        $response->assertSee('Sunday, March 12, 2017');
-        $response->assertSee('Doors at 8:00pm');
+        $response->assertSee('2017-03-12 20:00');
     }
 }
