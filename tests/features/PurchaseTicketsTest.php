@@ -38,7 +38,7 @@ class PurchaseTicketsTest extends TestCase
 
     private function decodeResponseJson()
     {
-        return $this->response->decodeResponseJson();   
+        return $this->response->decodeResponseJson();
     }
 
     private function assertValidationError($field)
@@ -147,14 +147,13 @@ class PurchaseTicketsTest extends TestCase
             'email' => 'personA@example.com',
             'ticket_quantity' => 3,
             'payment_token' => $this->paymentGateway->getValidTestToken(),
-        ]);  
+        ]);
 
         $this->assertEquals(3600, $this->paymentGateway->totalCharges());
 
         $this->assertTrue($concert->hasOrderFor('personA@example.com'));
 
         $this->assertEquals(3, $concert->ordersFor('personA@example.com')->first()->ticketQuantity());
-
     }
 
     /** @test */
