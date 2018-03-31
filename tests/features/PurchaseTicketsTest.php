@@ -20,6 +20,7 @@ class PurchaseTicketsTest extends TestCase
 
         $this->paymentGateway = new FakePaymentGateway;
         $this->app->instance(PaymentGateway::class, $this->paymentGateway);
+        Mail::fake();
     }
 
     private function orderTickets($concert, $params)
@@ -56,8 +57,6 @@ class PurchaseTicketsTest extends TestCase
     /** @test */
     public function customer_can_purchase_concert_tickets_to_a_published_concert()
     {
-        Mail::fake();
-
         OrderConfirmationNumber::shouldReceive('generate')->andReturn('ORDERCONFIRMATION1234');
         TicketCode::shouldReceive('generateFor')->andReturn('TICKETCODE1', 'TICKETCODE2', 'TICKETCODE3');
 
