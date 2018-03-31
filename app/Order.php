@@ -18,6 +18,8 @@ class Order extends Model
             'card_last_four' => $charge->cardLastFour()
         ]);
 
+        $tickets->each->claimFor($order);
+
         foreach ($tickets as $ticket) {
             $order->tickets()->save($ticket);
         }
