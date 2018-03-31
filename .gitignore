@@ -9,3 +9,4 @@ Homestead.yaml
 /public/build/*
 /public/js/*
 /public/css/*
+phpunit.dusk.xml
