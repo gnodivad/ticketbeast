@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Facades\TicketCode;
 
 class Ticket extends Model
 {
@@ -22,6 +23,12 @@ class Ticket extends Model
     public function release()
     {
         $this->update(['reserved_at' => null]);
+    }
+
+    public function claimFor($order)
+    {
+        $this->code = TicketCode::generate();
+        $order->tickets()->save($this);
     }
 
     public function concert()

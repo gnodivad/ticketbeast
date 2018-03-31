@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Ticket;
+use App\Order;
+use App\Facades\TicketCode;
 
 class TicketTest extends TestCase
 {
@@ -27,5 +29,19 @@ class TicketTest extends TestCase
         $ticket->release();
 
         $this->assertNull($ticket->fresh()->reserved_at);
+    }
+
+    /** @test */
+    public function a_ticket_can_be_claimed_for_an_order()
+    {
+        $order = factory(Order::class)->create();
+        $ticket = factory(Ticket::class)->create(['code' => null]);
+
+        TicketCode::shouldReceive('generate')->andReturn('TICKETCODE1');
+
+        $ticket->claimFor($order);
+
+        $this->assertContains($ticket->id, $order->tickets->pluck('id'));
+        $this->assertEquals('TICKETCODE1', $ticket->code);
     }
 }
