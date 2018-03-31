@@ -99,7 +99,7 @@ export default {
                     payment_token: token.id
                 })
                 .then(response => {
-                    window.location.href = response.body.url;
+                    window.location = `/orders/${response.data.confirmation_number}`;
                 })
                 .catch(response => {
                     this.processing = false;
