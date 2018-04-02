@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Backstage;
 
 use App\User;
@@ -16,7 +17,7 @@ class AddConcertTest extends TestCase
         return array_merge([
             'title' => 'No Warning',
             'subtitle' => 'with Cruel Hand and Backtrack',
-            'additional_information' => "You must be 19 years of age to attend this concert.",
+            'additional_information' => 'You must be 19 years of age to attend this concert.',
             'date' => '2017-11-18',
             'time' => '8:00pm',
             'venue' => 'The Mosh Pit',
@@ -27,12 +28,6 @@ class AddConcertTest extends TestCase
             'ticket_price' => '32.50',
             'ticket_quantity' => '75',
         ], $overrides);
-    }
-
-    private function from($url)
-    {
-        session()->setPreviousUrl(url($url));
-        return $this;
     }
 
     /** @test */
@@ -59,7 +54,7 @@ class AddConcertTest extends TestCase
         $response = $this->actingAs($user)->post('/backstage/concerts', [
             'title' => 'No Warning',
             'subtitle' => 'with Cruel Hand and Backtrack',
-            'additional_information' => "You must be 19 years of age to attend this concert.",
+            'additional_information' => 'You must be 19 years of age to attend this concert.',
             'date' => '2017-11-18',
             'time' => '8:00pm',
             'venue' => 'The Mosh Pit',
@@ -81,7 +76,7 @@ class AddConcertTest extends TestCase
 
             $this->assertEquals('No Warning', $concert->title);
             $this->assertEquals('with Cruel Hand and Backtrack', $concert->subtitle);
-            $this->assertEquals("You must be 19 years of age to attend this concert.", $concert->additional_information);
+            $this->assertEquals('You must be 19 years of age to attend this concert.', $concert->additional_information);
             $this->assertEquals(Carbon::parse('2017-11-18 8:00pm'), $concert->date);
             $this->assertEquals('The Mosh Pit', $concert->venue);
             $this->assertEquals('123 Fake St.', $concert->venue_address);
@@ -137,7 +132,7 @@ class AddConcertTest extends TestCase
         $this->disableExceptionHandling();
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)->post('/backstage/concerts', $this->validParams([
-            'additional_information' => "",
+            'additional_information' => '',
         ]));
         tap(Concert::first(), function ($concert) use ($response, $user) {
             $response->assertStatus(302);
