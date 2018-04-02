@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Concert;
 
 class ConcertsController extends Controller
 {
@@ -64,5 +65,28 @@ class ConcertsController extends Controller
         return view('backstage.concerts.edit', [
             'concert' => $concert,
         ]);
+    }
+
+    public function update($id)
+    {
+        $concert = Auth::user()->concerts()->findOrFail($id);
+
+        $concert->update([
+            'title' => request('title'),
+            'subtitle' => request('subtitle'),
+            'additional_information' => request('additional_information'),
+            'date' => Carbon::parse(vsprintf('%s %s', [
+                request('date'),
+                request('time')
+            ])),
+            'venue' => request('venue'),
+            'venue_address' => request('venue_address'),
+            'city' => request('city'),
+            'state' => request('state'),
+            'zip' => request('zip'),
+            'ticket_price' => request('ticket_price') * 100,
+        ]);
+
+        return redirect()->route('backstage.concerts.index');
     }
 }
