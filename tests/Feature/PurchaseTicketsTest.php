@@ -28,7 +28,7 @@ class PurchaseTicketsTest extends TestCase
     private function orderTickets($concert, $params)
     {
         $savedRequest = $this->app['request'];
-        
+
         $this->response = $this->json('POST', "/concerts/{$concert->id}/orders", $params);
 
         $this->app['request'] = $savedRequest;
@@ -62,7 +62,9 @@ class PurchaseTicketsTest extends TestCase
         OrderConfirmationNumber::shouldReceive('generate')->andReturn('ORDERCONFIRMATION1234');
         TicketCode::shouldReceive('generateFor')->andReturn('TICKETCODE1', 'TICKETCODE2', 'TICKETCODE3');
 
-        $concert = factory(Concert::class)->states('published')->create(['ticket_price' => 3250])->addTickets(3);
+        $concert = \ConcertFactory::createPublished(['ticket_price' => 3250, 'ticket_quantity' => 3]);
+        // $concert = factory(Concert::class)->create(['ticket_price' => 3250, 'ticket_quantity' => 3]);
+        // $concert->publish();
 
         $this->orderTickets($concert, [
             'email' => 'john@example.com',
@@ -153,7 +155,7 @@ class PurchaseTicketsTest extends TestCase
         $concert = factory(Concert::class)->states('published')->create([
             'ticket_price' => 1200
         ])->addTickets(3);
-        
+
         $this->paymentGateway->beforeFirstCharge(function ($paymentGateway) use ($concert) {
             $this->orderTickets($concert, [
                 'email' => 'personB@example.com',
