@@ -25,10 +25,12 @@ class CreateConcertsTable extends Migration
             $table->string('state');
             $table->string('zip');
             $table->integer('ticket_price');
+            $table->integer('ticket_quantity');
             $table->datetime('published_at')->nullable();
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
