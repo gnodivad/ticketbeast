@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class ConcertTest extends TestCase
 {
     use DatabaseMigrations;
- 
+
     /** @test */
     public function can_get_formatted_date()
     {
@@ -57,12 +57,17 @@ class ConcertTest extends TestCase
     /** @test */
     public function concerts_can_be_published()
     {
-        $concert = factory(Concert::class)->create(['published_at' => null]);
+        $concert = factory(Concert::class)->create([
+            'published_at' => null,
+            'ticket_quantity' => 5
+        ]);
         $this->assertFalse($concert->isPublished());
+        $this->assertEquals(0, $concert->ticketsRemaining());
 
         $concert->publish();
 
         $this->assertTrue($concert->isPublished());
+        $this->assertEquals(5, $concert->ticketsRemaining());
     }
 
     /** @test */
