@@ -14,7 +14,7 @@ class ViewPublishedConcertOrdersTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    function a_promoter_can_view_the_orders_of_their_own_published_concert()
+    public function a_promoter_can_view_the_orders_of_their_own_published_concert()
     {
         $this->disableExceptionHandling();
         $user = factory(User::class)->create();
@@ -28,7 +28,7 @@ class ViewPublishedConcertOrdersTest extends TestCase
     }
 
     /** @test */
-    function a_promoter_cannot_view_the_orders_of_unpublished_concerts()
+    public function a_promoter_cannot_view_the_orders_of_unpublished_concerts()
     {
         $user = factory(User::class)->create();
         $concert = ConcertFactory::createUnpublished(['user_id' => $user->id]);
@@ -39,7 +39,7 @@ class ViewPublishedConcertOrdersTest extends TestCase
     }
 
     /** @test */
-    function a_promoter_cannot_view_the_orders_of_another_published_concert()
+    public function a_promoter_cannot_view_the_orders_of_another_published_concert()
     {
         $user = factory(User::class)->create();
         $otherUser = factory(User::class)->create();
@@ -51,9 +51,9 @@ class ViewPublishedConcertOrdersTest extends TestCase
     }
 
     /** @test */
-    function a_guest_cannot_view_the_orders_of_any_published_concert()
+    public function a_guest_cannot_view_the_orders_of_any_published_concert()
     {
-        $concert = ConcertFactory::createPublished();
+        $concert = ConcertFactory::createPublished([]);
 
         $response = $this->get("/backstage/published-concerts/{$concert->id}/orders");
 
