@@ -8,6 +8,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Order;
+use Carbon\Carbon;
+use App\Ticket;
 
 class ViewPublishedConcertOrdersTest extends TestCase
 {
@@ -19,6 +22,8 @@ class ViewPublishedConcertOrdersTest extends TestCase
         $this->disableExceptionHandling();
         $user = factory(User::class)->create();
         $concert = ConcertFactory::createPublished(['user_id' => $user->id]);
+
+        $order = \OrderFactory::createForConcert($concert, ['created_at' => Carbon::parse('11 days ago')], 2);
 
         $response = $this->actingAs($user)->get("/backstage/published-concerts/{$concert->id}/orders");
 
