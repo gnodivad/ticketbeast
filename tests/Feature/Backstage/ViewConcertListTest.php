@@ -14,28 +14,6 @@ class ViewConcertListTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        Collection::macro('assertContains', function ($value) {
-            Assert::assertTrue($this->contains($value), 'Failed asserting that the collection contained the specific value.');
-        });
-
-        Collection::macro('assertNotContains', function ($value) {
-            Assert::assertFalse($this->contains($value), 'Failed asserting that the collection did not contain the specific value.');
-        });
-
-        Collection::macro('assertEquals', function ($items) {
-            Assert::assertEquals(count($this), count($items));
-
-            $this->zip($items)->each(function ($pair) {
-                list($a, $b) = $pair;
-                Assert::assertTrue($a->is($b));
-            });
-        });
-    }
-
     /** @test */
     public function guests_cannot_view_a_promoters_concert_list()
     {
