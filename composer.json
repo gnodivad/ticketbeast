@@ -9,7 +9,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "hashids/hashids": "^2.0",
         "laravel/dusk": "^1.1",
-        "laravel/framework": "5.4.*",
+        "laravel/framework": "5.5.*",
         "stripe/stripe-php": "^6.4",
         "zondicons/blade-bridge": "^0.1.0"
     },
@@ -17,9 +17,10 @@
         "codedungeon/phpunit-result-printer": "^0.8",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "1.0.0-alpha1",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~6.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": ["database"],

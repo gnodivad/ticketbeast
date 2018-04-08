@@ -53,7 +53,7 @@ class PurchaseTicketsTest extends TestCase
     {
         $this->assertResponseStatus(422);
 
-        $this->assertArrayHasKey($field, $this->decodeResponseJson());
+        $this->assertArrayHasKey($field, $this->decodeResponseJson()['errors']);
     }
 
     /** @test */
