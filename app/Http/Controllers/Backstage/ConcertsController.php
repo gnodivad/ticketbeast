@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Concert;
 use Illuminate\Validation\Rule;
 use App\NullFile;
+use App\Events\ConcertAdded;
 
 class ConcertsController extends Controller
 {
@@ -58,6 +59,8 @@ class ConcertsController extends Controller
             'ticket_quantity' => (int) request('ticket_quantity'),
             'poster_image_path' => request('poster_image', new NullFile)->store('posters', 'public'),
         ]);
+
+        ConcertAdded::dispatch($concert);
 
         return redirect()->route('backstage.concerts.index');
     }
