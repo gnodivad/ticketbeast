@@ -26,7 +26,7 @@ class ViewConcertListTest extends TestCase
     /** @test */
     public function promoters_can_only_view_a_list_of_their_own_concerts()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
         $otherUser = factory(User::class)->create();

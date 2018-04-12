@@ -52,7 +52,7 @@ class PromoterLoginTest extends TestCase
     /** @test */
     public function logging_in_with_an_account_that_does_not_exist()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $response = $this->post('/login', [
             'email' => 'nobody@example.com',

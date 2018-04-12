@@ -19,7 +19,7 @@ class ViewPublishedConcertOrdersTest extends TestCase
     /** @test */
     public function a_promoter_can_view_the_orders_of_their_own_published_concert()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $concert = ConcertFactory::createPublished(['user_id' => $user->id]);
 

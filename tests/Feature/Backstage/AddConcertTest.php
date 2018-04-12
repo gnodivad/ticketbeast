@@ -53,7 +53,7 @@ class AddConcertTest extends TestCase
     /** @test */
     public function adding_a_valid_concert()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)->post('/backstage/concerts', [
             'title' => 'No Warning',
@@ -117,7 +117,7 @@ class AddConcertTest extends TestCase
     /** @test */
     public function subtitle_is_optional()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)->post('/backstage/concerts', $this->validParams([
             'subtitle' => '',
@@ -134,7 +134,7 @@ class AddConcertTest extends TestCase
     /** @test */
     public function additional_information_is_optional()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)->post('/backstage/concerts', $this->validParams([
             'additional_information' => '',
@@ -331,8 +331,9 @@ class AddConcertTest extends TestCase
     /** @test */
     public function poster_image_is_uploaded_if_included()
     {
-        $this->disableExceptionHandling();
+        $this->withoutExceptionHandling();
 
+        Event::fake([ConcertAdded::class]);
         Storage::fake('public');
         $user = factory(User::class)->create();
         $file = File::image('concert-poster.png', 850, 1100);
